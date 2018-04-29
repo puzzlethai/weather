@@ -13,6 +13,73 @@
 
 </head>
 <body>
+<script  type="text/javascript"  charset="utf-8">
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+                break;
+            }
+        }
+    }
+    var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
+        "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
+        "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
+    var  aqiWidgetConfig  =  [];
+    cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
+    _aqiFeed(aqiWidgetConfig);
+
+    function  displayCity(aqi)  {
+        console.log(aqi);
+        switch (aqi.opt.city) {
+            case "thailand/bangkok/chulalongkorn-hospital": // "bangkok"
+                $("#headbkk-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> กรุงเทพมหานคร  %aqi &nbsp   &nbsp</span>"));
+                $("#bangkok-aqi-container").html(aqi.details);
+                break;
+            case "thailand/lampang/provincial-waterworks-authority-mae-moh":
+                $("#headlamp-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> แม่เมาะ ลำปาง  %aqi &nbsp          &nbsp  &nbsp</span>"));
+                $("#lampang-aqi-container").html(aqi.details);
+                break;
+            case "chiang-mai":
+                $("#chiang-mai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงใหม่  %aqi</div>"));
+                break;
+            case "mueang-chiang-rai":
+                $("#chiang-rai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงราย %aqi</div>"));
+                break;
+            case "rayong":
+                $("#rayong-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ระยอง %aqi</div>"));
+                break;
+            case "thailand/phuket/municipal-health-center-1":
+                $("#phuket-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ภูเก็ต %aqi</div>"));
+                break;
+            case "thailand/khonkaen":
+                $("#khonkaen-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ขอนแก่น %aqi</div>"));
+                break;
+            case "thailand/nan/municipality-office":
+                $("#nan-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>น่าน %aqi</div>"));
+                break;
+            case "thailand/yala/white-elephant-park":
+                $("#yala-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ยะลา %aqi</div>"));
+                break;
+            case "thailand/ayutthaya/ayutthaya-witthayalai-school":
+                $("#ayutthaya-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>อยุธยา %aqi</div>"));
+                break;
+
+            default:
+
+        }
+
+    }
+    sleep(1000000);
+    //    _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
+    /*_aqiFeed({  city:"bangkok",  callback:function(aqi){
+        $("#bangkok-aqi-container").html(aqi.details);
+    }  });*/
+    // _aqiFeed({  display: "%aqi<br>%attribution", container:"rayong-aqi-container",  city:"rayong"  }); // rayong
+    /*_aqiFeed({  city:"rayong",  callback:function(aqi2){
+        $("#rayong-aqi-container").html(aqi2.aqi);
+    }  });*/
+</script>
 <!--<h2 > ดัชนีคุณภาพอากาศของจังหวัดต่างๆในประเทศไทย </h2>-->
 <table bgcolor="#869db9" >
     <tr style="color: white; ; align: middle">
@@ -76,63 +143,6 @@
                 </TD><TD ALIGN="LEFT">ทุกคนควรหลีกเลี่ยงกิจกรรมนอกอาคาร</TD></TR> </TABLE><p></p></td></tr> </table></td></tr> </table>
     </td></tr>
 </table>
-<script  type="text/javascript"  charset="utf-8">
-    var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
-        "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
-        "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
-    var  aqiWidgetConfig  =  [];
-    cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
-    _aqiFeed(aqiWidgetConfig);
 
-    function  displayCity(aqi)  {
-        console.log(aqi);
-        switch (aqi.opt.city) {
-        case "thailand/bangkok/chulalongkorn-hospital": // "bangkok"
-            $("#headbkk-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> กรุงเทพมหานคร  %aqi &nbsp   &nbsp</span>"));
-            $("#bangkok-aqi-container").html(aqi.details);
-            break;
-            case "thailand/lampang/provincial-waterworks-authority-mae-moh":
-                $("#headlamp-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> แม่เมาะ ลำปาง  %aqi &nbsp          &nbsp  &nbsp</span>"));
-                $("#lampang-aqi-container").html(aqi.details);
-                break;
-            case "chiang-mai":
-                $("#chiang-mai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงใหม่  %aqi</div>"));
-                break;
-            case "mueang-chiang-rai":
-                $("#chiang-rai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงราย %aqi</div>"));
-                break;
-        case "rayong":
-            $("#rayong-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ระยอง %aqi</div>"));
-            break;
-        case "thailand/phuket/municipal-health-center-1":
-            $("#phuket-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ภูเก็ต %aqi</div>"));
-            break;
-            case "thailand/khonkaen":
-                $("#khonkaen-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ขอนแก่น %aqi</div>"));
-                break;
-            case "thailand/nan/municipality-office":
-                $("#nan-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>น่าน %aqi</div>"));
-                break;
-            case "thailand/yala/white-elephant-park":
-                $("#yala-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ยะลา %aqi</div>"));
-                break;
-            case "thailand/ayutthaya/ayutthaya-witthayalai-school":
-                $("#ayutthaya-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>อยุธยา %aqi</div>"));
-                break;
-
-        default:
-
-        }
-
-    }
-    //    _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
-/*_aqiFeed({  city:"bangkok",  callback:function(aqi){
-    $("#bangkok-aqi-container").html(aqi.details);
-}  });*/
-   // _aqiFeed({  display: "%aqi<br>%attribution", container:"rayong-aqi-container",  city:"rayong"  }); // rayong
-/*_aqiFeed({  city:"rayong",  callback:function(aqi2){
-    $("#rayong-aqi-container").html(aqi2.aqi);
-}  });*/
-</script>
 </body>
 </html>
