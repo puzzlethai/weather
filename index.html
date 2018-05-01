@@ -4,73 +4,103 @@
     <meta charset="UTF-8">
     <title>Test Weather Widget</title>
     <script  src='https://code.jquery.com/jquery-1.12.4.min.js' type='text/javascript'></script>
-    <script defer type="text/javascript"  charset="utf-8">
+    <script  type="text/javascript"  charset="utf-8">
         (function(w,d,t,f){  w[f]=w[f]||function(c,k,n){s=w[f],k=s['k']=(s['k']||(k?('&k='+k):''));s['c']=
             c=(c  instanceof  Array)?c:[c];s['n']=n=n||0;L=d.createElement(t),e=d.getElementsByTagName(t)[0];
-            L.src='//feed.aqicn.org/feed/'+(c[n].city)+'/'+(c[n].lang||'')+'/feed.v1.js?n='+n+k;
+            L.async=1;L.src='//feed.aqicn.org/feed/'+(c[n].city)+'/'+(c[n].lang||'')+'/feed.v1.js?n='+n+k;
             e.parentNode.insertBefore(L,e);  };  })(  window,document,'script','_aqiFeed'  );
+        var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
+            "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
+            "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
+        var  aqiWidgetConfig  =  [];
+        cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
+        _aqiFeed(aqiWidgetConfig);
+
+        function  displayCity(aqi)  {
+            console.log(aqi);
+            switch (aqi.opt.city) {
+                case "thailand/bangkok/chulalongkorn-hospital": // "bangkok"
+                    $("#headbkk-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> กรุงเทพมหานคร  %aqi &nbsp   &nbsp</span>"));
+                    $("#bangkok-aqi-container").html(aqi.details);
+                    break;
+                case "thailand/lampang/provincial-waterworks-authority-mae-moh":
+                    $("#headlamp-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> แม่เมาะ ลำปาง  %aqi &nbsp          &nbsp  &nbsp</span>"));
+                    $("#lampang-aqi-container").html(aqi.details);
+                    break;
+                case "chiang-mai":
+                    $("#chiang-mai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงใหม่  %aqi</div>"));
+                    break;
+                case "mueang-chiang-rai":
+                    $("#chiang-rai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงราย %aqi</div>"));
+                    break;
+                case "rayong":
+                    $("#rayong-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ระยอง %aqi</div>"));
+                    break;
+                case "thailand/phuket/municipal-health-center-1":
+                    $("#phuket-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ภูเก็ต %aqi</div>"));
+                    break;
+                case "thailand/khonkaen":
+                    $("#khonkaen-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ขอนแก่น %aqi</div>"));
+                    break;
+                case "thailand/nan/municipality-office":
+                    $("#nan-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>น่าน %aqi</div>"));
+                    break;
+                case "thailand/yala/white-elephant-park":
+                    $("#yala-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ยะลา %aqi</div>"));
+                    break;
+                case "thailand/ayutthaya/ayutthaya-witthayalai-school":
+                    $("#ayutthaya-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>อยุธยา %aqi</div>"));
+                    break;
+
+                default:
+
+            }
+
+        }
+
+        //    _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
+        /*_aqiFeed({  city:"bangkok",  callback:function(aqi){
+            $("#bangkok-aqi-container").html(aqi.details);
+        }  });*/
+        // _aqiFeed({  display: "%aqi<br>%attribution", container:"rayong-aqi-container",  city:"rayong"  }); // rayong
+        /*_aqiFeed({  city:"rayong",  callback:function(aqi2){
+            $("#rayong-aqi-container").html(aqi2.aqi);
+        }  });*/
+        function appendheaderfooter(){
+            var header="<div style='position:fixed;top:0px;background-color:aqua;'>header html</div>";
+            var footer="<div style='position:fixed;bottom:0px;background-color:aqua;'>footer html</div>"
+            $("body").append(header+footer);
+            var last ="<table width=\"750\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tr bgcolor=\"#869db9\">\n" +
+                "    <td align=\"middle\" bgcolor=\"#f1f4f8\">\n" +
+                "        <table border=\"0\" cellspacing=\"1\" cellpadding=\"5\" width=\"730\">\n" +
+                "        <tr  valign=\"top\"> <td ALIGN=\"CENTER\"><p><span class=\"empurplebig\">เกณฑ์ของ ดัชนีคุณภาพอากาศ(AQI) ตามมาตราฐาน US-EPA 2016\n" +
+                "</span></p><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\"> <tr>\n" +
+                "            <td><TABLE CELLSPACING=1 CELLPADDING=3 WIDTH= border=0\n" +
+                "                       VALIGN=\"TOP\"> <TR CLASS=emwhite ALIGN=CENTER BGCOLOR= white> <TD >AQI\n" +
+                "            </TD><TD> Level </TD><TD >ความหมาย</TD><TD >สีที่ใช้</TD><TD >แนวทางการป้องกันผลกระทบ</TD></TR>\n" +
+                "                <TR style=\"background-color:#009966;\"> <TD ALIGN=CENTER>0-50 </TD><TD ALIGN=\"CENTER\">Good</TD>\n" +
+                "                    <TD ALIGN=\"CENTER\">คุณภาพดี</TD><TD ALIGN=\"CENTER\">เขียว</TD><TD ALIGN=\"CENTER\">ไม่มีผลกระทบต่อสุขภาพ</TD></TR><TR ALIGN=middle BGCOLOR=\"FFF46B\">\n" +
+                "                    <TD ALIGN=CENTER>51-100 </TD><TD ALIGN=\"CENTER\">Moderate</TD><TD ALIGN=\"CENTER\">คุณภาพปานกลาง</TD><TD ALIGN=\"CENTER\">เหลือง\n" +
+                "                </TD><TD ALIGN=\"CENTER\">ผู้ป่วยโรคระบบทางเดินหายใจ ควรหลีกเลี่ยงการทำกิจกรรมภายนอกอาคารเป็นเวลานาน</TD></TR><TR ALIGN=middle BGCOLOR=\"ff9933\">\n" +
+                "                    <TD ALIGN=CENTER>101-150 </TD><TD ALIGN=\"CENTER\">Unhealthy for<br>Sensitive<br>Groups</TD><TD ALIGN=\"CENTER\">มีผลกระทบต่อสุขภาพสำหรับบางกลุ่ม</TD><TD ALIGN=\"CENTER\">ส้ม</TD><TD ALIGN=\"LEFT\">ผู้ป่วยโรคระบบทางเดินหายใจ\n" +
+                "                    ควรหลีกเลี่ยงการออกกำลังภายนอกอาคาร</TD></TR><TR style=\"color: white; background: #cc0033; align: middle\">\n" +
+                "                    <TD ALIGN=CENTER>151-200 </TD><TD ALIGN=\"CENTER\">Unhealthy</TD><TD ALIGN=\"CENTER\">มีผลกระทบต่อสุขภาพ</TD><TD ALIGN=\"CENTER\">แดง</TD><TD ALIGN=\"LEFT\">ผู้ป่วยโรคระบบทางเดินหายใจ\n" +
+                "                    ควรหลีกเลี่ยงการออกกำลังภายนอกอาคาร<br>บุคคลทั่วไป โดยเฉพาะเด็กและผู้สูงอายุ ไม่ควรทำกิจกรรมภายนอกอาคารเป็นเวลานาน</TD></TR><TR style=\"color: white; background: #660099; align: middle\">\n" +
+                "                    <TD ALIGN=CENTER>201-300 </TD><TD ALIGN=\"CENTER\">Very<br>Unhealthy</TD><TD ALIGN=\"CENTER\">มีผลกระทบต่อสุขภาพมาก</TD><TD ALIGN=\"CENTER\">ม่วง</TD><TD ALIGN=\"LEFT\">ผู้ป่วยโรคระบบทางเดินหายใจ\n" +
+                "                    ควรหลีกเลี่ยงกิจกรรมภายนอกอาคาร<br> บุคคลทั่วไป โดยเฉพาะเด็กและผู้สูงอายุ ควรจำกัดการออกกำลังภายนอกอาคาร</TD></TR><TR style=\"color: white; background: #7e0023; align: middle\" >\n" +
+                "                    <TD VALIGN=top ALIGN=CENTER>มากกว่า 300 </TD><TD ALIGN=\"CENTER\">Hazardous</TD><TD ALIGN=\"CENTER\">อันตราย </TD><TD ALIGN=\"CENTER\">แดงเข้ม\n" +
+                "                </TD><TD ALIGN=\"LEFT\">ทุกคนควรหลีกเลี่ยงกิจกรรมนอกอาคาร</TD></TR> </TABLE><p></p></td></tr> </table></td></tr> </table>\n" +
+                "    </td></tr>\n" +
+                "</table>"
+            $("body").append(last);
+        }
+        window.onload = appendheaderfooter;
     </script>
 
 </head>
 <body>
-<script defer type="text/javascript"  charset="utf-8">
-    var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
-        "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
-        "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
-    var  aqiWidgetConfig  =  [];
-    cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
-    _aqiFeed(aqiWidgetConfig);
+<script  type="text/javascript"  charset="utf-8">
 
-    function  displayCity(aqi)  {
-        console.log(aqi);
-        switch (aqi.opt.city) {
-            case "thailand/bangkok/chulalongkorn-hospital": // "bangkok"
-                $("#headbkk-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> กรุงเทพมหานคร  %aqi &nbsp   &nbsp</span>"));
-                $("#bangkok-aqi-container").html(aqi.details);
-                break;
-            case "thailand/lampang/provincial-waterworks-authority-mae-moh":
-                $("#headlamp-aqi-container").append(aqi.text("<span style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'> แม่เมาะ ลำปาง  %aqi &nbsp          &nbsp  &nbsp</span>"));
-                $("#lampang-aqi-container").html(aqi.details);
-                break;
-            case "chiang-mai":
-                $("#chiang-mai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงใหม่  %aqi</div>"));
-                break;
-            case "mueang-chiang-rai":
-                $("#chiang-rai-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>เชียงราย %aqi</div>"));
-                break;
-            case "rayong":
-                $("#rayong-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ระยอง %aqi</div>"));
-                break;
-            case "thailand/phuket/municipal-health-center-1":
-                $("#phuket-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ภูเก็ต %aqi</div>"));
-                break;
-            case "thailand/khonkaen":
-                $("#khonkaen-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ขอนแก่น %aqi</div>"));
-                break;
-            case "thailand/nan/municipality-office":
-                $("#nan-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>น่าน %aqi</div>"));
-                break;
-            case "thailand/yala/white-elephant-park":
-                $("#yala-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>ยะลา %aqi</div>"));
-                break;
-            case "thailand/ayutthaya/ayutthaya-witthayalai-school":
-                $("#ayutthaya-aqi-container").append(aqi.text("<div style='%style;font-size:20px;padding:5px 10px;max-width:180px;text-align:center;'>อยุธยา %aqi</div>"));
-                break;
-
-            default:
-
-        }
-
-    }
-
-    //    _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
-    /*_aqiFeed({  city:"bangkok",  callback:function(aqi){
-        $("#bangkok-aqi-container").html(aqi.details);
-    }  });*/
-    // _aqiFeed({  display: "%aqi<br>%attribution", container:"rayong-aqi-container",  city:"rayong"  }); // rayong
-    /*_aqiFeed({  city:"rayong",  callback:function(aqi2){
-        $("#rayong-aqi-container").html(aqi2.aqi);
-    }  });*/
 </script>
 <!--<h2 > ดัชนีคุณภาพอากาศของจังหวัดต่างๆในประเทศไทย </h2>-->
 <table bgcolor="#869db9" >
@@ -113,28 +143,7 @@
     </tr>
 </table>
 
-<table width="750" border="0" cellspacing="0" cellpadding="0"> <tr bgcolor="#869db9">
-    <td align="middle" bgcolor="#f1f4f8">
-        <table border="0" cellspacing="1" cellpadding="5" width="730">
-        <tr  valign="top"> <td ALIGN="CENTER"><p><span class="empurplebig">เกณฑ์ของ ดัชนีคุณภาพอากาศ(AQI) ตามมาตราฐาน US-EPA 2016
-</span></p><table width="100%" border="0" cellspacing="0" cellpadding="5"> <tr>
-            <td><TABLE CELLSPACING=1 CELLPADDING=3 WIDTH= border=0
-                       VALIGN="TOP"> <TR CLASS=emwhite ALIGN=CENTER BGCOLOR= white> <TD >AQI
-            </TD><TD> Level </TD><TD >ความหมาย</TD><TD >สีที่ใช้</TD><TD >แนวทางการป้องกันผลกระทบ</TD></TR>
-                <TR style="background-color:#009966;"> <TD ALIGN=CENTER>0-50 </TD><TD ALIGN="CENTER">Good</TD>
-                    <TD ALIGN="CENTER">คุณภาพดี</TD><TD ALIGN="CENTER">เขียว</TD><TD ALIGN="CENTER">ไม่มีผลกระทบต่อสุขภาพ</TD></TR><TR ALIGN=middle BGCOLOR="FFF46B">
-                    <TD ALIGN=CENTER>51-100 </TD><TD ALIGN="CENTER">Moderate</TD><TD ALIGN="CENTER">คุณภาพปานกลาง</TD><TD ALIGN="CENTER">เหลือง
-                </TD><TD ALIGN="CENTER">ผู้ป่วยโรคระบบทางเดินหายใจ ควรหลีกเลี่ยงการทำกิจกรรมภายนอกอาคารเป็นเวลานาน</TD></TR><TR ALIGN=middle BGCOLOR="ff9933">
-                    <TD ALIGN=CENTER>101-150 </TD><TD ALIGN="CENTER">Unhealthy for<br>Sensitive<br>Groups</TD><TD ALIGN="CENTER">มีผลกระทบต่อสุขภาพสำหรับบางกลุ่ม</TD><TD ALIGN="CENTER">ส้ม</TD><TD ALIGN="LEFT">ผู้ป่วยโรคระบบทางเดินหายใจ
-                    ควรหลีกเลี่ยงการออกกำลังภายนอกอาคาร</TD></TR><TR style="color: white; background: #cc0033; align: middle">
-                    <TD ALIGN=CENTER>151-200 </TD><TD ALIGN="CENTER">Unhealthy</TD><TD ALIGN="CENTER">มีผลกระทบต่อสุขภาพ</TD><TD ALIGN="CENTER">แดง</TD><TD ALIGN="LEFT">ผู้ป่วยโรคระบบทางเดินหายใจ
-                    ควรหลีกเลี่ยงการออกกำลังภายนอกอาคาร<br>บุคคลทั่วไป โดยเฉพาะเด็กและผู้สูงอายุ ไม่ควรทำกิจกรรมภายนอกอาคารเป็นเวลานาน</TD></TR><TR style="color: white; background: #660099; align: middle">
-                    <TD ALIGN=CENTER>201-300 </TD><TD ALIGN="CENTER">Very<br>Unhealthy</TD><TD ALIGN="CENTER">มีผลกระทบต่อสุขภาพมาก</TD><TD ALIGN="CENTER">ม่วง</TD><TD ALIGN="LEFT">ผู้ป่วยโรคระบบทางเดินหายใจ
-                    ควรหลีกเลี่ยงกิจกรรมภายนอกอาคาร<br> บุคคลทั่วไป โดยเฉพาะเด็กและผู้สูงอายุ ควรจำกัดการออกกำลังภายนอกอาคาร</TD></TR><TR style="color: white; background: #7e0023; align: middle" >
-                    <TD VALIGN=top ALIGN=CENTER>มากกว่า 300 </TD><TD ALIGN="CENTER">Hazardous</TD><TD ALIGN="CENTER">อันตราย </TD><TD ALIGN="CENTER">แดงเข้ม
-                </TD><TD ALIGN="LEFT">ทุกคนควรหลีกเลี่ยงกิจกรรมนอกอาคาร</TD></TR> </TABLE><p></p></td></tr> </table></td></tr> </table>
-    </td></tr>
-</table>
+
 
 </body>
 </html>
