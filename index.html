@@ -9,6 +9,7 @@
             c=(c  instanceof  Array)?c:[c];s['n']=n=n||0;L=d.createElement(t),e=d.getElementsByTagName(t)[0];
             L.async=1;L.src='//feed.aqicn.org/feed/'+(c[n].city)+'/'+(c[n].lang||'')+'/feed.v1.js?n='+n+k;
             e.parentNode.insertBefore(L,e);  };  })(  window,document,'script','_aqiFeed'  );
+        _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
     </script>
 
 </head>
@@ -76,7 +77,7 @@
                     </TD><TD ALIGN="LEFT">ทุกคนควรหลีกเลี่ยงกิจกรรมนอกอาคาร</TD></TR> </TABLE><p></p></td></tr> </table></td></tr> </table>
     </td></tr>
 </table>
-<script  type="text/javascript"  charset="utf-8">
+<!-- <script  type="text/javascript"  charset="utf-8">
 /*    var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
         "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
         "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
@@ -125,7 +126,7 @@
         }
 
     }*/
-        _aqiFeed({  display: "%details", container:"bangkok-aqi-container",  city:"bangkok"  });
+
     /*_aqiFeed({  city:"bangkok",  callback:function(aqi){
         $("#bangkok-aqi-container").html(aqi.details);
     }  });*/
@@ -133,6 +134,6 @@
     /*_aqiFeed({  city:"rayong",  callback:function(aqi2){
         $("#rayong-aqi-container").html(aqi2.aqi);
     }  });*/
-</script>
+</script>-->
 </body>
 </html>
