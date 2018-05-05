@@ -12,9 +12,7 @@
         var  cities  =  ["thailand/bangkok/chulalongkorn-hospital","thailand/lampang/provincial-waterworks-authority-mae-moh","chiang-mai" , "rayong", "mueang-chiang-rai", "thailand/nan/municipality-office",
             "thailand/phuket/municipal-health-center-1", "thailand/khonkaen",
             "thailand/yala/white-elephant-park","thailand/ayutthaya/ayutthaya-witthayalai-school"];
-        var  aqiWidgetConfig  =  [];
-        cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
-        _aqiFeed(aqiWidgetConfig);
+
 
         function  displayCity(aqi)  {
             console.log(aqi);
@@ -67,6 +65,50 @@
             $("#rayong-aqi-container").html(aqi2.aqi);
         }  });*/
         function appendheaderfooter(){
+            var beforelast ="<table bgcolor=\"#869db9\" >\n" +
+                "    <tr style=\"color: white; ; align: middle\">\n" +
+                "        <th colspan=\"5\" ><h2>ดัชนีคุณภาพอากาศของจังหวัดต่างๆในประเทศไทย</h2></th>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td></td>\n" +
+                "        <td ><span  id=\"headbkk-aqi-container\"></span></td>\n" +
+                "        <td ><span  id=\"headlamp-aqi-container\"></span></td>\n" +
+                "        <td></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td><span  id=\"chiang-rai-aqi-container\"></span></td>\n" +
+                "        <td rowspan=\"4\"><span  id=\"bangkok-aqi-container\"></span></td>\n" +
+                "        <td rowspan=\"4\"><span  id=\"lampang-aqi-container\"></span></td>\n" +
+                "        <td><span  id=\"nan-aqi-container\"></span></td>\n" +
+                "    </tr>\n" +
+                "<!--    <tr>\n" +
+                "        <td></td>\n" +
+                "        <td rowspan=\"5\"><span  id=\"headbkk-aqi-container\"></span><br><span  id=\"bangkok-aqi-container\"></span></td>\n" +
+                "        <td rowspan=\"5\"><span  id=\"headlamp-aqi-container\"></span><br><span  id=\"lampang-aqi-container\"></span></td>\n" +
+                "        <td></td>\n" +
+                "    </tr>-->\n" +
+                "\n" +
+                "    <tr>\n" +
+                "        <td><span  id=\"chiang-mai-aqi-container\"></span></td>\n" +
+                "        <td><span  id=\"khonkaen-aqi-container\"></span></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td><span  id=\"phuket-aqi-container\"></span></td>\n" +
+                "        <td><span  id=\"ayutthaya-aqi-container\"></span></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td><span  id=\"yala-aqi-container\"></span></td>\n" +
+                "        <td><span  id=\"rayong-aqi-container\"></span></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td colspan=\"5\"> ขอบคุณข้อมูลจาก </td>\n" +
+                "    </tr>\n" +
+                "</table>";
+            $("body").append(beforelast);
+            var  aqiWidgetConfig  =  [];
+
+            cities.forEach(function(city)  {  aqiWidgetConfig.push({city:city,  callback:  displayCity});  });
+            _aqiFeed(aqiWidgetConfig);
             var header="<div style='position:fixed;top:0px;background-color:aqua;'>header html</div>";
             var footer="<div style='position:fixed;bottom:0px;background-color:aqua;'>footer html</div>"
             $("body").append(header+footer);
@@ -103,45 +145,7 @@
 
 </script>
 <!--<h2 > ดัชนีคุณภาพอากาศของจังหวัดต่างๆในประเทศไทย </h2>-->
-<table bgcolor="#869db9" >
-    <tr style="color: white; ; align: middle">
-        <th colspan="5" ><h2>ดัชนีคุณภาพอากาศของจังหวัดต่างๆในประเทศไทย</h2></th>
-    </tr>
-    <tr>
-        <td></td>
-        <td ><span  id="headbkk-aqi-container"></span></td>
-        <td ><span  id="headlamp-aqi-container"></span></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><span  id="chiang-rai-aqi-container"></span></td>
-        <td rowspan="4"><span  id="bangkok-aqi-container"></span></td>
-        <td rowspan="4"><span  id="lampang-aqi-container"></span></td>
-        <td><span  id="nan-aqi-container"></span></td>
-    </tr>
-<!--    <tr>
-        <td></td>
-        <td rowspan="5"><span  id="headbkk-aqi-container"></span><br><span  id="bangkok-aqi-container"></span></td>
-        <td rowspan="5"><span  id="headlamp-aqi-container"></span><br><span  id="lampang-aqi-container"></span></td>
-        <td></td>
-    </tr>-->
 
-    <tr>
-        <td><span  id="chiang-mai-aqi-container"></span></td>
-        <td><span  id="khonkaen-aqi-container"></span></td>
-    </tr>
-    <tr>
-        <td><span  id="phuket-aqi-container"></span></td>
-        <td><span  id="ayutthaya-aqi-container"></span></td>
-    </tr>
-    <tr>
-        <td><span  id="yala-aqi-container"></span></td>
-        <td><span  id="rayong-aqi-container"></span></td>
-    </tr>
-    <tr>
-        <td colspan="5"> ขอบคุณข้อมูลจาก </td>
-    </tr>
-</table>
 
 
 
